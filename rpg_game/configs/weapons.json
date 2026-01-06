@@ -1,0 +1,20 @@
+{
+  "weapons":
+  [
+    {
+      "name": "Обглоданная кость",
+      "damage": 5,
+      "hit_chance": 50
+    },
+    {
+        "name": "Ржавый нож",
+        "damage": 4,
+        "hit_chance": 75
+    },
+    {
+        "name": "Лопата могильщика",
+        "damage": 5,
+        "hit_chance": 50
+    }
+  ]
+}
