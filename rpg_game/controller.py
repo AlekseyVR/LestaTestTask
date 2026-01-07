@@ -16,17 +16,32 @@ class GameController:
     def __init__(self):
         self.dungeon = DungeonGenerator().dungeon
         self.player = DungeonGenerator().player
-        self.position = 0
+        self.__position = 0
+        self.__entered_new_room = True
 
     input_choose_action: str = "Выберите действие:"
     choose_action_title: str = "Выберите одну цифру из доступных действий:"
+
+    @property
+    def position(self):
+        return self.__position
+
+    @position.setter
+    def position(self, value):
+        """ These flags are required Because we should know when player don't move in a new room.
+        f.e. after battle with enemy."""
+        if value != self.__position:
+            self.__position = value
+            self.__entered_new_room = True
 
     def start(self):
         print(f"Добро пожаловать, {self.player.name}.")
         print(f"\tОписание игрока: {self.player.description}")
         while True:
             room = self.dungeon[self.position]
-            print(f"Вы вошли в комнату: {room.description}")
+            if self.__entered_new_room:
+                print(f"Вы вошли в комнату: {room.description}")
+                self.__entered_new_room = False
             if room.is_enemy_exists and room.enemy.hp > 0:
                 print(f"Вы видите врага {room.enemy.name}\n"
                       f"\tОписание вражины: {room.enemy.description}")
