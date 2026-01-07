@@ -1,3 +1,4 @@
+import copy
 import random
 from dataclasses import dataclass, field
 
@@ -22,14 +23,25 @@ class Enemy:
 
 
 class Enemies:
-    equip_enemies: list[Enemy] = None
+    __equipped: list[Enemy] | None = None
 
-    def equip(self):
-        if self.equip_enemies is None:
-            self.equip_enemies = Enemy.from_json()
-        for enemy in self.equip_enemies:
-            if enemy.weapon is None:
-                enemy.weapon = random.choice(Weapons.from_json().weapons)
-            if enemy.armor is None:
-                enemy.armor = random.choice(Armors.from_json().armors)
-        return self.equip_enemies
+    def equip(self) -> list[Enemy]:
+        if self.__equipped is None:
+            raw = Enemy.from_json()
+            self.__equipped: list = []
+            for equip in raw:
+                # if armor / defense not specified - generate random from config
+                weapon = equip.weapon if equip.weapon else random.choice(Weapons.from_json().weapons)
+                armor = equip.armor if equip.armor else random.choice(Armors.from_json().armors)
+                # needs copy because each enemy can has link on the same obj weapon or armor
+                self.__equipped.append(
+                    Enemy(
+                        name=equip.name,
+                        hp=equip.hp,
+                        description=equip.description,
+                        death_description=equip.death_description,
+                        weapon=copy.deepcopy(weapon),
+                        armor=copy.deepcopy(armor)
+                    )
+                )
+            return self.__equipped

@@ -1,3 +1,4 @@
+import copy
 import random
 
 from rpg_game.models.enemy import Enemy, Enemies
@@ -7,7 +8,7 @@ from rpg_game.models.room import Room
 
 class DungeonGenerator:
     # Карта должна быть представлена следующим образом (пример):
-    __dungeon = ("St", " ", "E", "E", " ", "Ex")
+    __dungeon = ("St", " ", "E", "E", " ", "E", "Ex")
     __map_dungeon = None
     __player = None
 
@@ -42,11 +43,11 @@ class DungeonGenerator:
                 dungeon.append(Room(description="Вы видите свет, кажется это выход.", is_first=False, is_last=True))
             elif cell == "E":
                 dungeon.append(Room(description=random.choice([i.description for i in rooms]),
-                                    enemy=random.choice(enemies),
+                                    enemy=copy.deepcopy(random.choice(enemies)),
                                     is_first=False, is_last=False))
             else:
                 dungeon.append(Room(description=random.choice([i.description for i in rooms]),
                                     is_first=False, is_last=False))
-        return dungeon # todo что если попробовать генератор yield?
+        return dungeon
 
 

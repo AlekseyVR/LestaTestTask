@@ -11,14 +11,10 @@ class StateOfLife(str, Enum):
 
 def auto_fight(player: Player, enemy: Enemy):
     while player.hp > 0 and enemy.hp > 0:
-        # player step
-        enemy_status = attack_with_random_hit_chance(player, enemy)
-        if enemy_status == StateOfLife.DEAD:
+        if attack_with_random_hit_chance(player, enemy) == StateOfLife.DEAD:  # player step
             return
-        player_status = attack_with_random_hit_chance(enemy, player)
-        if player_status == StateOfLife.DEAD:
+        if attack_with_random_hit_chance(enemy, player) == StateOfLife.DEAD:  # enemy step
             return
-
 
 def attack_with_random_hit_chance(character_1, character_2) -> StateOfLife:
     random_hit_chance = random.randint(0, 100)
