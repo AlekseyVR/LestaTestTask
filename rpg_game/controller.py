@@ -54,6 +54,12 @@ class GameController:
                 self.handle_choice(player_input, room, available_actions)
 
     def show_actions(self, dungeon_room: Room) -> list["Actions"]:
+        """ Determine available action from current player position and show it
+        :arg
+            dungeon_room: Room - current rom where exist PLayer
+        :return
+            List available actions for PLayer
+        """
         available_actions: list = []
         if dungeon_room.is_enemy_exists and dungeon_room.enemy.hp > 0:
             available_actions.append(Actions.ATTACK)
@@ -75,6 +81,12 @@ class GameController:
         return available_actions
 
     def handle_user_input(self, user_input: str, actions: list['Actions']):
+        """ Validate user input by requirements and app logic
+        :arg
+            user_input: value which user was inputted
+            actions: list available action as allowed data for current moment
+        :return
+            user_input: value which user was inputted - because Player can override value """
         available_actions = [action.value[0] for action in actions]
         while user_input not in available_actions:
             print(f"Вы ввели неподдерживаемое значение: {user_input}")
@@ -84,6 +96,12 @@ class GameController:
         return user_input
 
     def handle_choice(self, choice: str, dungeon_room: Room, actions: list['Actions']):
+        """ Do some action which Player chosen
+         :arg
+            choice: user input
+            dungeon_room: current room for player
+            actions: available actions for current room and current situation
+        """
         user_input = self.handle_user_input(choice, actions)
         if user_input == "1":
             auto_fight(self.player, dungeon_room.enemy)

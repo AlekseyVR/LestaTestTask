@@ -1,3 +1,5 @@
+""" Data model based on config 'rpg_game/configs/player.json'"""
+
 import random
 from dataclasses import dataclass, field
 

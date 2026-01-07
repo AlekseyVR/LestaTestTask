@@ -15,7 +15,7 @@ class DungeonGenerator:
     @property
     def dungeon(self) -> list[Room]:
         if self.__map_dungeon is None:
-            self.__map_dungeon = self.create_dungeon()
+            self.__map_dungeon = self.__create_dungeon()
         return self.__map_dungeon
 
     @property
@@ -29,10 +29,11 @@ class DungeonGenerator:
         return Player.from_json()
 
     @staticmethod
-    def __create_enemies():
+    def __create_enemies() -> list[Enemy]:
         return Enemies().equip()
 
-    def create_dungeon(self) -> list[Room]:
+    def __create_dungeon(self) -> list[Room]:
+        """ Create dungeon with objects as Rooms and Enemies"""
         rooms: list[Room] = Room.from_json()
         enemies: list[Enemy] = self.__create_enemies()
         dungeon = []

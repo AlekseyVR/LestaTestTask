@@ -1,3 +1,5 @@
+""" Data model based on config 'rpg_game/models/enemy.py'"""
+
 import copy
 import random
 from dataclasses import dataclass, field
@@ -32,6 +34,8 @@ class Enemies:
     __equipped: list[Enemy] | None = None
 
     def equip(self) -> list[Enemy]:
+        """ Create enemies data by enemies config file.
+        And if enemy doesn't have some weapon/armor we choose it independent by random"""
         if self.__equipped is None:
             raw = Enemy.from_json()
             self.__equipped: list = []

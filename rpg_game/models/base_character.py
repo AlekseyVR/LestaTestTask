@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-
 from rpg_game.models.armor import Armor
 from rpg_game.models.weapon import Weapon
 

@@ -1,3 +1,5 @@
+""" Data model based on config 'rpg_game/configs/rooms.json'"""
+
 from dataclasses import dataclass, field
 
 from rpg_game.models.enemy import Enemy

@@ -1,3 +1,5 @@
+""" Data model based on config 'rpg_game/configs/weapons.json'"""
+
 from dataclasses import dataclass, field
 from utils.files import load_from_json
 
