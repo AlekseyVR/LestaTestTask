@@ -1,15 +1,19 @@
-from dataclasses import dataclass
-
+from dataclasses import dataclass, field
 from utils.files import load_from_json
 
 
 @dataclass
 class Armor:
     name: str
-    description: str
     defense: int
+    description: str | None = field(default=None)
+
+@dataclass
+class Armors:
+    armors: list[Armor]
 
     @classmethod
-    def from_json(cls, path: str = "rpg_game/configs/armor.json") -> list["Armor"]:
+    def from_json(cls, path: str = "rpg_game/configs/armor.json") -> "Armors":
         data = load_from_json(path)
-        return [cls(**i) for i in data]
+        data["armors"] = [Armor(**armor) for armor in data["armors"]]
+        return cls(**data)

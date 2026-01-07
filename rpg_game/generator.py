@@ -4,6 +4,7 @@ from rpg_game.models.enemy import Enemy, Enemies
 from rpg_game.models.player import Player
 from rpg_game.models.room import Room
 
+
 class DungeonGenerator:
     # Карта должна быть представлена следующим образом (пример):
     __dungeon = ("St", " ", "E", "E", " ", "Ex")
@@ -27,8 +28,8 @@ class DungeonGenerator:
         return Player.from_json()
 
     @staticmethod
-    def __create_enemies() -> Enemies.equip:
-        return Enemies.equip
+    def __create_enemies():
+        return Enemies().equip()
 
     def create_dungeon(self) -> list[Room]:
         rooms: list[Room] = Room.from_json()
@@ -36,14 +37,16 @@ class DungeonGenerator:
         dungeon = []
         for cell in self.__dungeon:
             if cell == "St":
-                dungeon.append(Room(description="Перед вами вход в подземелье."))
+                dungeon.append(Room(description="Перед вами вход в подземелье.", is_first=True, is_last=False))
             elif cell == "Ex":
-                dungeon.append(Room(description="Вы видите свет, кажется это выход."))
+                dungeon.append(Room(description="Вы видите свет, кажется это выход.", is_first=False, is_last=True))
             elif cell == "E":
                 dungeon.append(Room(description=random.choice([i.description for i in rooms]),
-                                    enemy=random.choice(enemies)))
+                                    enemy=random.choice(enemies),
+                                    is_first=False, is_last=False))
             else:
-                dungeon.append(Room(description=random.choice([i.description for i in rooms])))
+                dungeon.append(Room(description=random.choice([i.description for i in rooms]),
+                                    is_first=False, is_last=False))
         return dungeon # todo что если попробовать генератор yield?
 
 

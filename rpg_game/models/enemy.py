@@ -1,9 +1,8 @@
-import json
 import random
 from dataclasses import dataclass, field
 
-from rpg_game.models.armor import Armor
-from rpg_game.models.weapon import Weapon
+from rpg_game.models.armor import Armor, Armors
+from rpg_game.models.weapon import Weapon, Weapons
 from utils.files import load_from_json
 
 
@@ -23,15 +22,14 @@ class Enemy:
 
 
 class Enemies:
-    __equip_enemies: list[Enemy] = None
+    equip_enemies: list[Enemy] = None
 
-    @property
-    def equip(self) -> list["Enemy"]:
-        if self.__equip_enemies is None:
-            self.__equip_enemies = Enemy.from_json()
-        for enemy in self.__equip_enemies:
+    def equip(self):
+        if self.equip_enemies is None:
+            self.equip_enemies = Enemy.from_json()
+        for enemy in self.equip_enemies:
             if enemy.weapon is None:
-                enemy.weapon = random.choice(Weapon.from_json())
+                enemy.weapon = random.choice(Weapons.from_json().weapons)
             if enemy.armor is None:
-                enemy.armor = random.choice(Armor.from_json())
-        return self.__equip_enemies
+                enemy.armor = random.choice(Armors.from_json().armors)
+        return self.equip_enemies
