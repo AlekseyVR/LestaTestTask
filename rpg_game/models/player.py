@@ -2,19 +2,21 @@ import random
 from dataclasses import dataclass, field
 
 from rpg_game.models.armor import Armor
+from rpg_game.models.base_character import BaseCharacter
 from rpg_game.models.weapon import Weapon
 from utils.files import load_from_json
 
 
 @dataclass
-class Player:
-    names: list[str]
-    descriptions: list[str]
-    death_descriptions: list[str]
+class Player(BaseCharacter):
     hp: int
     weapon: Weapon
     armor: Armor
+    names: list[str] | None = field(default=None)
+    descriptions: list[str] | None = field(default=None)
+    death_descriptions: list[str] | None = field(default=None)
 
+    max_hp: int = field(init=False, default=None)
     name: str = field(init=False, default=None)
     description: str = field(init=False, default=None)
     death_description: str = field(init=False, default=None)
@@ -23,6 +25,7 @@ class Player:
         self.name = random.choice(self.names)
         self.description = random.choice(self.descriptions)
         self.death_description = random.choice(self.death_descriptions)
+        self.max_hp = self.hp
 
     @classmethod
     def from_json(cls, path: str = "rpg_game/configs/player.json") -> "Player":

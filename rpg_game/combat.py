@@ -22,6 +22,7 @@ def attack_with_random_hit_chance(character_1, character_2) -> StateOfLife:
         damage = max(character_1.weapon.damage - character_2.armor.defense, 0)
         character_2.hp -= damage
         print(f"{character_1.name} попал по {character_2.name}, нанесено урона: {damage}")
+        print(f"Состояние здоровья {character_2.name}: {max(0, character_2.hp)}/{character_2.max_hp}")
     else:
         print(f"{character_1.name} промахнулся")
     if character_2.hp <=0:

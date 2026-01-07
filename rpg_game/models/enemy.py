@@ -3,18 +3,24 @@ import random
 from dataclasses import dataclass, field
 
 from rpg_game.models.armor import Armor, Armors
+from rpg_game.models.base_character import BaseCharacter
 from rpg_game.models.weapon import Weapon, Weapons
 from utils.files import load_from_json
 
 
 @dataclass
-class Enemy:
+class Enemy(BaseCharacter):
     name: str
     hp: int
     description: str
     death_description: str
     weapon: Weapon | None = field(default=None)
     armor: Armor | None = field(default=None)
+
+    max_hp: int = field(init=False, default=None)
+
+    def __post_init__(self):
+        self.max_hp = self.hp
 
     @classmethod
     def from_json(cls, path: str = "rpg_game/configs/enemies.json") -> list["Enemy"]:
