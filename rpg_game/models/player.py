@@ -18,15 +18,15 @@ class Player(BaseCharacter):
     descriptions: list[str] | None = field(default=None)
     death_descriptions: list[str] | None = field(default=None)
 
-    max_hp: int = field(init=False, default=None)
-    name: str = field(init=False, default=None)
-    description: str = field(init=False, default=None)
-    death_description: str = field(init=False, default=None)
+    max_hp: int = field(default=None)
+    name: str = field(default=None)
+    description: str = field(default=None)
+    death_description: str = field(default=None)
 
     def __post_init__(self):
-        self.name = random.choice(self.names)
-        self.description = random.choice(self.descriptions)
-        self.death_description = random.choice(self.death_descriptions)
+        self.name = random.choice(self.names) if self.name is None else self.name
+        self.description = random.choice(self.descriptions) if self.description is None else self.description
+        self.death_description = random.choice(self.death_descriptions) if self.death_description is None else self.death_description
         self.max_hp = self.hp
 
     @classmethod
