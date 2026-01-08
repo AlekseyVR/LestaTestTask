@@ -1,8 +1,7 @@
 from rpg_game.models.enemy import Enemy
-from tests.test_base_test import BaseTest
 from utils.files import load_from_json
 
-class DungeonMovesTest(BaseTest):
+class DungeonMovesTest:
 
     def test_create_player(self, gc):
         """ Check create user with the same data as player config json"""

@@ -1,8 +1,7 @@
 from rpg_game.controller import Actions
-from tests.test_base_test import BaseTest
 
 
-class DungeonMovesTest(BaseTest):
+class DungeonMovesTest:
 
     def test_start_actions(self, gc):
         target_position = 0

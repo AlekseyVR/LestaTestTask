@@ -1,9 +1,8 @@
 from unittest.mock import patch
 import pytest
-from tests.test_base_test import BaseTest
 
 
-class DungeonMovesTest(BaseTest):
+class DungeonMovesTest:
 
     def test_initial_position(self, gc):
         assert gc.position == 0, f"Start position is not 0. Actual result: {gc.position}"
